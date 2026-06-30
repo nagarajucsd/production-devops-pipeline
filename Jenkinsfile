@@ -11,13 +11,15 @@ pipeline {
 }
 
         stage('Build') {
-            steps {
-                dir('app/springboot-app') {
-                    sh './mvnw clean package'
-                }
-            }
+    steps {
+        dir('app/springboot-app') {
+            sh '''
+                chmod +x mvnw
+                ./mvnw clean package
+            '''
         }
-
+    }
+}
         stage('Build Docker Image') {
             steps {
                 sh 'docker build -t springboot-app:v1 .'

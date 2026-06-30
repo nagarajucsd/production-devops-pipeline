@@ -1,0 +1,47 @@
+Projeect Documentation:
+
+Module1: Foundation
+
+step1: Started with creating github repo "production-devops-pipeline" without intializing README, .gitignore and License.
+step2: Created a project folder in wsl ubuntu (local laptop) "production-devops-pipeline" and into the folder.
+step3: Intialized the git for the project folder
+step4: now created the project folder structure with required folder like (app, docker, kubernetes, terraform, jenkins, monitoring, ngnix, scripts, diagrams, screenshots, docs)
+step5: created README and wrote basic data into it (local)
+step6: created .gitignore and wrote basic details in it (local)
+step7: now add the files and commited first commit, rename branch to main, connect to github, push the code to the github repo.
+
+errors faced: 
+1. while pushing the code encountered an eror for different github details and different repo. also problem with the public and private key.
+sol: 
+  1.verified the keys and removed those (cd ~/.ssh, ls -l, rm id_ed25519 id_ed25519.pub)
+  2.created the ssh key again (ssh-keygen -t ed25519 -C "nagaraju_csd@srkrec.edu.in" verify: ls -al ~/.ssh )
+  3. get the public key (cat ~/.ssh/id_ed25519.pub) and  put it in GitHub → Settings → SSH and GPG keys → New SSH key
+  4. test the connection (ssh -T git@github.com)
+  5. changed the repo remote from https to ssh 
+links:(https://chatgpt.com/c/6a42028f-f410-83ee-b54d-aa896689cd1a)
+
+
+
+Moduele2: Build a Java Spring boot Application
+
+step1: create a spring boot project from https://start.spring.io/ with dependencies (Spring Web, Boot Actuator, boot devtools) and download the zip and extract it in the project folder /app
+step2: open the application in vscode (code .) and run the application 
+step3: create rest controller inside src/main/java/com/devops/springbootapp folder /controller file HomeController.java
+step4: test it (http://localhost:8081) and and check whether it is health ans its version also
+step5: maven build package (creating the jar file)
+step6: adding the changes in project folder and pushing it to the github
+
+errors faced:
+1. encountered with error port 8080 in use 
+sol : tried in deleting the process id related to port 8080 again and again without checking what's the error is exactly then realised that  it(8080) already assigned to jenkins so changed the spring boot port to 8081 (In appliacation.properties: server.port=8081)
+    and restarted the application
+2. 404 Not Found No static resource health for request '/health'  
+sol: configured acutation in application.properties   management.endpoints.web.exposure.include=health,info  --> This tells Spring Boot which Actuator endpoints should be accessible over HTTP.
+                                                      management.endpoint.health.show-details=always  -->  This controls how much information the /actuator/health endpoint returns.
+enabled mapping logs ::  logging.level.org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping=TRACE --> tells Spring Boot to log every URL mapping that it registers when the application starts.
+ also in pom.xml added the dependency 
+  (<dependency>
+    <groupId>org.springframework.boot</groupId>         --> It turns your Spring Boot project into a web application 
+    <artifactId>spring-boot-starter-web</artifactId>         by adding everything needed to build REST APIs and web applications.
+  </dependency>)                                             spring-boot-starter-web is a bundle of web-related libraries.
+

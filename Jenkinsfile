@@ -5,7 +5,7 @@ pipeline {
 
         stage('Checkout') {
             steps {
-                git 'https://github.com/Nagaraju-209/production-devops-pipeline.git'
+                git 'https://github.com/nagarajucsd/production-devops-pipeline.git'
             }
         }
 

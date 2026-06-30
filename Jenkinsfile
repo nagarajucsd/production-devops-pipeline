@@ -4,10 +4,11 @@ pipeline {
     stages {
 
         stage('Checkout') {
-            steps {
-                git 'https://github.com/nagarajucsd/production-devops-pipeline.git'
-            }
-        }
+          steps {
+            git branch: 'main',
+               url: 'https://github.com/nagarajucsd/production-devops-pipeline.git'
+    }
+}
 
         stage('Build') {
             steps {

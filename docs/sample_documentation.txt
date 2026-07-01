@@ -22,7 +22,7 @@ links:(https://chatgpt.com/c/6a42028f-f410-83ee-b54d-aa896689cd1a)
 
 
 
-Moduele2: Build a Java Spring boot Application
+Module2: Build a Java Spring boot Application
 
 step1: create a spring boot project from https://start.spring.io/ with dependencies (Spring Web, Boot Actuator, boot devtools) and download the zip and extract it in the project folder /app
 step2: open the application in vscode (code .) and run the application 
@@ -44,4 +44,23 @@ enabled mapping logs ::  logging.level.org.springframework.web.servlet.mvc.metho
     <groupId>org.springframework.boot</groupId>         --> It turns your Spring Boot project into a web application 
     <artifactId>spring-boot-starter-web</artifactId>         by adding everything needed to build REST APIs and web applications.
   </dependency>)                                             spring-boot-starter-web is a bundle of web-related libraries.
+
+
+
+
+Module3: Docker 
+
+step1: verify docker with docker --version and docker info 
+step2: go to app folder springboot folder and build the jar (mvn clean package)  and verify in target folder 
+step3: create and write the Dockerfile in the project root folder itself 
+step4: build docker image and run docker container 
+step5: verify whether container is running or not and also the application is working or not , then enter the container stop and start the contaier finally remove teh container and image.
+step6: then push changes to the repo
+
+errros faced: 
+1. docker --version docker commond not found ( as i didn't started the docker desktop at that time)
+sol : after starting the docker desktop it showed the docker version
+2. while building the image encountered error (ERROR: docker: 'docker buildx build' requires 1 argument)
+because mistake in command (docker build -t springboot-app:v1 ) missed "." at end
+sol: docker build -t springboot-app:v1 .  (as the Dockerfile is in the project root folder )
 

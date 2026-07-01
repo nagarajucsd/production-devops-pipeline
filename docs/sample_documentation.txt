@@ -41,7 +41,7 @@ sol: configured acutation in application.properties   management.endpoints.web.e
 enabled mapping logs ::  logging.level.org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping=TRACE --> tells Spring Boot to log every URL mapping that it registers when the application starts.
  also in pom.xml added the dependency 
   (<dependency>
-    <groupId>org.springframework.boot</groupId>         --> It turns your Spring Boot project into a web application 
+    <groupId>org.springframework.boot</groupId>         --> It turns  Spring Boot project into a web application 
     <artifactId>spring-boot-starter-web</artifactId>         by adding everything needed to build REST APIs and web applications.
   </dependency>)                                             spring-boot-starter-web is a bundle of web-related libraries.
 
@@ -63,4 +63,60 @@ sol : after starting the docker desktop it showed the docker version
 2. while building the image encountered error (ERROR: docker: 'docker buildx build' requires 1 argument)
 because mistake in command (docker build -t springboot-app:v1 ) missed "." at end
 sol: docker build -t springboot-app:v1 .  (as the Dockerfile is in the project root folder )
+
+
+Module4: Jenkins CI/CD pipeline
+
+step1: Install jenkins in local or install using docker and login to jenkins
+step2: install plugins and create a jenkins pipeline
+step3: create a Jenkinsfile in the project root folder and add code to it
+step4: configure pipeline git repo, branch main, script path  and build the pipeline
+step5: verify the springboot application and push the changes to the github repo
+
+errors faced:
+1. Failed to restart docker.service: Unit docker.service not found.(Docker desktop is not opened)
+sol: started the docker desktop
+2. git rev-parse refs/remotes/origin/master^{commit} ERROR: Couldn't find any revision to build.
+sol: jenkins trying to fetch master but my branch is main so modified the jenkins pipeline code 
+    stage('Checkout') {
+    steps {
+        git branch: 'main',
+            url: 'https://github.com/nagarajucsd/production-devops-pipeline.git'
+    }
+    }
+
+3. ./mvnw: Permission denied 
+sol : execute permission is not given for mvnw so modified it in both local system and jenkins pipeline
+  stage('Build') {
+    steps {
+        dir('app/springboot-app') {
+            sh '''
+                chmod +x mvnw
+                ./mvnw clean package
+            '''
+        }
+    }
+  }
+
+
+
+Module5: AWS Deployment
+
+step1: launch EC2 instance (ubuntu 24.04, t3micro -free tier, 20GB, key-pair) Security group - port allowed (ssh- 22, application-8081)
+step2: connect to ec2 via ssh through wsl (ssh -i ~/.ssh/key-pair.pem ubuntu@ip-address)
+step3: update and upgrade the package 
+step4: install docker, enable docker , docker status and check docker version . docker permissions (sudo usermod -aG docker ubuntu) docker ps works without sudo.
+step5: push image to docker hub from local 
+step6: pull the image on ec2 and run the container
+step7: test the browser http://ec2-ipaddress:8081
+step8: add, commit and push  the changes to the github
+
+errors faced:
+1.  WARNING: UNPROTECTED PRIVATE KEY FILE! while connecting ec2 using (ssh -i key-pair.pem ubuntu@ec2-ipaddress)
+sol: as i tried to connect it from wsl /mnt/c      as the key is using windows permissions so used the key from linux home directory as (ssh -i ~/.ssh/key-pair.pem ubuntu@ip-address)
+2. ! [rejected]        main -> main (fetch first)  -->It means the remote branch contains commits that the local branch doesn't have. Git rejects the push to prevent accidentally 
+                                                   overwriting remote history. The usual solution is to fetch and integrate the remote changes (often with git pull --rebase) before pushing.
+sol: git log --oneline --graph --decorate --all -10  and   git pull --rebase origin main --> to know the conflicts.
+updated the jenkins file and add it to the github and git rebase --continue save the file and exit editor  and push the code again
+
 

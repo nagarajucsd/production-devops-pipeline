@@ -2,7 +2,9 @@
 
 ## Overview
 
-This repository demonstrates a production-inspired DevOps pipeline for deploying a Spring Boot application using modern DevOps tools and AWS Cloud.
+This repository demonstrates a production-inspired DevOps pipeline for deploying a Spring Boot application using modern DevOps practices.
+
+---
 
 ## Tech Stack
 
@@ -11,24 +13,55 @@ This repository demonstrates a production-inspired DevOps pipeline for deploying
 - Maven
 - Git
 - GitHub
-- Jenkins
 - Docker
+- Jenkins
 - Kubernetes
 - Terraform
 - AWS
-- SonarQube
-- Trivy
 - Prometheus
 - Grafana
 
-## Project Status
+---
 
-- [x] Module 1 - Spring Boot Application
-- [ ] Module 2 - Docker
-- [ ] Module 3 - Jenkins
-- [ ] Module 4 - SonarQube
-- [ ] Module 5 - Trivy
-- [ ] Module 6 - Kubernetes
-- [ ] Module 7 - AWS
-- [ ] Module 8 - Terraform
-- [ ] Module 9 - Monitoring
+## Project Structure
+
+app/
+
+docker/
+
+jenkins/
+
+terraform/
+
+kubernetes/
+
+monitoring/
+
+docs/
+
+scripts/
+
+---
+
+## Features
+
+- REST APIs
+- Health Check
+- Version API
+- Employee API
+- Spring Boot Actuator
+- Logging
+
+---
+
+## Project Roadmap
+
+- ✅ Spring Boot
+- ⏳ Docker
+- ⏳ Jenkins
+- ⏳ SonarQube
+- ⏳ Trivy
+- ⏳ Kubernetes
+- ⏳ AWS
+- ⏳ Terraform
+- ⏳ Monitoring

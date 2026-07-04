@@ -6,6 +6,9 @@ spring:
     name: production-devops-pipeline
 
 management:
+  info:
+    env:
+      enabled: true
   endpoints:
     web:
       exposure:
@@ -19,3 +22,5 @@ info:
   app:
     name: Production DevOps Pipeline
     version: 1.0
+    description: Enterprise DevOps Demo
+    developer: Dandu Rama Siva Naga Raju

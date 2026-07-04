@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.devops.springboot_app.dto.ApiResponse;
+
 @RestController
 @RequestMapping("/api/employees")
 public class EmployeeController {
@@ -16,14 +18,14 @@ public class EmployeeController {
             LoggerFactory.getLogger(EmployeeController.class);
 
     @GetMapping
-    public List<String> getEmployees() {
+    public ApiResponse<List<String>> getEmployees() {
 
         logger.info("Employees API Called");
 
-        return List.of(
-                "Alice",
-                "Bob",
-                "Charlie"
-        );
-    }
+        return new ApiResponse<>(
+            true,
+            "Employees fetched successfully",
+            List.of("Alice", "Bob", "Charlie")
+    );
+}
 }

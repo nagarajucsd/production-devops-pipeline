@@ -5,6 +5,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 @RestController
 public class HelloController {
 
@@ -12,26 +15,38 @@ public class HelloController {
             LoggerFactory.getLogger(HelloController.class);
 
     @GetMapping("/")
-    public String home() {
+    public Map<String, Object> home() {
 
         logger.info("Home API Called");
 
-        return "Production DevOps Pipeline";
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("application", "Production DevOps Pipeline");
+        response.put("version", "1.0");
+        response.put("status", "Running");
+
+        return response;
     }
 
     @GetMapping("/health")
-    public String health() {
+    public Map<String, Object> health() {
 
         logger.info("Health API Called");
 
-        return "Application is healthy";
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("status", "UP");
+        response.put("message", "Application is healthy");
+
+        return response;
     }
 
     @GetMapping("/version")
-    public String version() {
+    public Map<String, Object> version() {
 
         logger.info("Version API Called");
 
-        return "Version 1.0";
+        Map<String, Object> response = new LinkedHashMap<>();
+        response.put("version", "1.0");
+
+        return response;
     }
 }

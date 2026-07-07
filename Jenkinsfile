@@ -1,6 +1,12 @@
 pipeline {
 
     agent any
+    environment {
+        APP_NAME = 'production-devops-pipeline'
+        IMAGE_NAME = 'production-devops-pipeline'
+        CONTAINER_NAME = 'springboot-container'
+        APP_PORT = '8082'
+    }
 
     tools {
         jdk 'JDK17'
@@ -51,21 +57,21 @@ pipeline {
                 sh '''
                 docker build \
                 -f docker/Dockerfile \
-                -t production-devops-pipeline:${BUILD_NUMBER} \
-                -t production-devops-pipeline:latest .
+                -t ${IMAGE_NAME}:${BUILD_NUMBER} \
+                -t ${IMAGE_NAME}:latest .
                 '''
             }
         }
         stage('Verify Docker Image') {
             steps {
-                sh 'docker images | grep production-devops-pipeline'
+                sh 'docker images | grep ${IMAGE_NAME}'
             }
         }
 
         stage('Cleanup Old Container') {
             steps {
                 sh '''
-                docker rm -f springboot-container || true '''
+                docker rm -f ${CONTAINER_NAME} || true '''
             }
         }
 
@@ -73,9 +79,9 @@ pipeline {
             steps {
                 sh '''
                 docker run -d \
-                --name springboot-container \
+                --name ${CONTAINER_NAME} \
                 -p 8082:8082 \
-                production-devops-pipeline:${BUILD_NUMBER} '''
+                ${IMAGE_NAME}:${BUILD_NUMBER} '''
             }
         }   
         stage('Health Check') {

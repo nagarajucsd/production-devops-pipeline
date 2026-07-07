@@ -38,13 +38,54 @@ pipeline {
                 }
             }
         }
+
         stage('Archive Artifact') {
             steps {
                 archiveArtifacts artifacts: 'app/springboot-app/target/*.jar',
                          fingerprint: true
             }
         }
-        
+
+        stage('Build Docker Image') {
+            steps {
+                sh '''
+                docker build \
+                -f docker/Dockerfile \
+                -t production-devops-pipeline:${BUILD_NUMBER} \
+                -t production-devops-pipeline:latest .
+                '''
+            }
+        }
+        stage('Verify Docker Image') {
+            steps {
+                sh 'docker images | grep production-devops-pipeline'
+            }
+        }
+
+        stage('Cleanup Old Container') {
+            steps {
+                sh '''
+                docker rm -f springboot-container || true '''
+            }
+        }
+
+        stage('Run Docker Container') {
+            steps {
+                sh '''
+                docker run -d \
+                --name springboot-container \
+                -p 8082:8082 \
+                production-devops-pipeline:${BUILD_NUMBER} '''
+            }
+        }   
+        stage('Health Check') {
+            steps {
+                sh '''
+                sleep 20
+                curl http://localhost:8082/actuator/health
+                '''
+            }
+        }
 
     }
 

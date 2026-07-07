@@ -44,11 +44,7 @@ pipeline {
                          fingerprint: true
             }
         }
-        stage('Clean Workspace') {
-            steps {
-                cleanWs()
-            }
-        }
+        
 
     }
 

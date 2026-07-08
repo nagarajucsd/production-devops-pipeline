@@ -52,7 +52,6 @@ pipeline {
                         sh '''
                         mvn sonar:sonar \
                         -Dsonar.projectKey=production-devops-pipeline \
-                        -Dsonar.projectName=production-devops-pipeline
                         '''
                     }
                 }

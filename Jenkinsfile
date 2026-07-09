@@ -58,6 +58,21 @@ pipeline {
             }
         }
 
+        stage('Trivy Filesystem Scan') {
+            steps {
+                sh '''
+                chmod +x scripts/trivy-fs-scan.sh
+                ./scripts/trivy-fs-scan.sh
+                '''
+            }
+        }
+
+        stage('Archive Trivy Report') {
+            steps {
+                archiveArtifacts artifacts: 'reports/*.txt', fingerprint: true
+            }
+        }
+
         stage('Package') {
             steps {
                 dir('app/springboot-app') {
@@ -110,10 +125,19 @@ pipeline {
 
         stage('Health Check') {
             steps {
-                sh '''
-                sleep 60
-                curl -sf http://localhost:${APP_PORT}/actuator/health
-                '''
+                script {
+                    timeout(time: 2, unit: 'MINUTES') {
+                        waitUntil {
+                            def status = sh(
+                                script: '''
+                                curl -s http://localhost:8082/actuator/health | grep '"status":"UP"'
+                                ''',
+                                returnStatus: true
+                            )
+                            return (status == 0)
+                        }
+                    }
+                }
             }
         }
 

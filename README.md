@@ -94,10 +94,10 @@ production-devops-pipeline:v1.0.0
 ## Project Roadmap
 
 - ✅ Spring Boot
-- ⏳ Docker
-- ⏳ Jenkins
-- ⏳ SonarQube
-- ⏳ Trivy
+- ✅ Docker
+- ✅ Jenkins
+- ✅ SonarQube
+- ✅ Trivy
 - ⏳ Kubernetes
 - ⏳ AWS
 - ⏳ Terraform

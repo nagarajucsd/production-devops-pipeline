@@ -5,10 +5,27 @@ spring:
   application:
     name: production-devops-pipeline
 
+  datasource:
+    url: jdbc:mysql://localhost:3306/employee_db
+    username: devops
+    password: devops123
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+
+    properties:
+      hibernate:
+        format_sql: true
+
 management:
   info:
     env:
       enabled: true
+
   endpoints:
     web:
       exposure:
@@ -21,6 +38,6 @@ management:
 info:
   app:
     name: Production DevOps Pipeline
-    version: 1.0
+    version: 1.1.0
     description: Enterprise DevOps Demo
     developer: Dandu Rama Siva Naga Raju

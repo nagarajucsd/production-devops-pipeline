@@ -84,6 +84,14 @@ pipeline {
                 '''
             }
         }
+        stage('Verify Docker Image') {
+            steps {
+                sh '''
+                echo "Available Docker Images:"
+                docker images
+                '''
+            }
+        }
 
         stage('Trivy Image Scan') {
             steps {

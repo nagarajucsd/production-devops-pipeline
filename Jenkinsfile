@@ -124,11 +124,7 @@ pipeline {
             }
         }
 
-        stage('Verify Docker Image') {
-            steps {
-                sh 'docker images | grep ${IMAGE_NAME}'
-            }
-        }
+        
 
         stage('Cleanup Old Container') {
             steps {

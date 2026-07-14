@@ -99,6 +99,15 @@ pipeline {
                 '''
             }
         }
+        stage('Verify Docker Image') {
+            steps {
+                sh '''
+                echo "IMAGE_NAME=$IMAGE_NAME"
+                echo "BUILD_NUMBER=$BUILD_NUMBER"
+                docker images
+                '''
+            }
+        }
 
         stage('Trivy Image Scan') {
             steps {

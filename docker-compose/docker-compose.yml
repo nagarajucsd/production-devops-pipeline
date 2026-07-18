@@ -40,7 +40,8 @@ services:
     restart: unless-stopped
 
     depends_on:
-      - mysql-db
+      mysql-db:
+        condition: service_healthy
 
     ports:
       - "${APP_PORT}:8082"

@@ -29,10 +29,20 @@ spec:
 
           env:
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:mysql://mysql-service:3306/employee_db
+              valueFrom:
+                configMapKeyRef:
+                  name: springboot-config
+                  key: SPRING_DATASOURCE_URL
+
 
             - name: SPRING_DATASOURCE_USERNAME  
-              value: devops
+              valueFrom:
+                secretKeyRef:
+                  name: springboot-secret
+                  key: SPRING_DATASOURCE_USERNAME
 
             - name: SPRING_DATASOURCE_PASSWORD
-              value: devops123
+              valueFrom:
+                secretKeyRef:
+                  name: springboot-secret
+                  key: SPRING_DATASOURCE_PASSWORD

@@ -32,7 +32,7 @@ spec:
               value: employee_db
 
             - name: MYSQL_USER
-              value: devops
+              value: devops 
 
             - name: MYSQL_PASSWORD
               value: devops123

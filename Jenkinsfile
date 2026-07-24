@@ -147,11 +147,19 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 sh '''
-                    echo "Deploying application to Kubernetes..."
+                    set -e
 
+                    echo "========== Kubernetes Context =========="
+                    kubectl config current-context
+
+                    echo "========== Cluster =========="
+                    kubectl cluster-info
+
+                    echo "========== Nodes =========="
+                    kubectl get nodes
+
+                    echo "========== Applying Manifests =========="
                     kubectl apply -f kubernetes/
-
-                    echo "Deployment submitted successfully."
                 '''
             }
         }
